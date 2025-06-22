@@ -162,8 +162,8 @@ public class FreeFlyCamera : MonoBehaviour
         // Rotation seulement si clic droit maintenu
         if (Input.GetMouseButton(0))
         {
-            yaw += Input.GetAxis("Mouse X") * rotationSpeed;
-            pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;
+            yaw -= Input.GetAxis("Mouse X") * rotationSpeed;
+            pitch += Input.GetAxis("Mouse Y") * rotationSpeed;
 
             transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
