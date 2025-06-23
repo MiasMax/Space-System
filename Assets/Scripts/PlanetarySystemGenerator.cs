@@ -16,16 +16,25 @@ public class PlanetarySystemGenerator : MonoBehaviour
     public float distanceStep = 30f;
     public float planetMass = 1; // Terre
 
+
+    private float salpeterExponent = 1.2f;
+    private float minSeparationFactor = 3f; // Valeur minimale du facteur de séparation
+    private float maxSeparationFactor = 7f; // Valeur maximale du facteur de séparation
+    private float meanSeparationFactor = 5f; // Moyenne utilisée dans la distribution normale
+
+
     void Start()
     {
-        GameObject star1 = StarGenerator.GenerateStar(starPrefab, 1.2f);
-        GameObject star2 = StarGenerator.GenerateStar(starPrefab, 1.2f);
+        GameObject star1 = StarGenerator.GenerateStar(starPrefab, salpeterExponent);
+        GameObject star2 = StarGenerator.GenerateStar(starPrefab, salpeterExponent);
 
         float rocheLimit = Mathf.Max(
             Orbits.ComputeRocheLimit(star1, star2),
             Orbits.ComputeRocheLimit(star2, star1)
         );
-        float separation = rocheLimit * Mathf.Max(3f, Mathf.Min(Gaussian.NormalDistribution(5f), 7f));
+
+        float clampedSeparationFactor = Mathf.Max(minSeparationFactor, Mathf.Min(Gaussian.NormalDistribution(meanSeparationFactor), maxSeparationFactor)); // Tirage aléatoire autour de 5 Bornage entre 3 et 7
+        float separation = rocheLimit * clampedSeparationFactor;  // Calcul final de la séparation
 
         GenerateBinarySystem(star1, star2, separation);
     }
