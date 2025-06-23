@@ -115,10 +115,11 @@ using UnityEngine;
 
 public class FreeFlyCamera : MonoBehaviour
 {
-    public float moveSpeed = 1000f;         // Vitesse de déplacement
-    public int rotationSpeed = 2;        // Sensibilité de la souris
-    public float zoomSpeed = 1000f;         // Vitesse zoom molette
-    public int runSpeed = 10;            // Accélération
+    public float moveSpeedKeybord = 100f; // Vitesse de déplacement
+    public float moveSpeedScroll = 100f;  // Vitesse de déplacement
+    public int rotationSpeed = 2;         // Sensibilité de la souris
+    public float zoomSpeed = 1000f;       // Vitesse zoom molette
+    public int runSpeed = 10;             // Accélération
 
     private float yaw = 0f;
     private float pitch = 0f;
@@ -147,23 +148,33 @@ public class FreeFlyCamera : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.position += moveDir * moveSpeed * Time.deltaTime * runSpeed;
+            transform.position += moveDir * moveSpeedKeybord * Time.deltaTime * runSpeed;
         }
         else
         {
-            transform.position += moveDir * moveSpeed * Time.deltaTime;
+            transform.position += moveDir * moveSpeedKeybord * Time.deltaTime;
         }
         
 
         // Zoom avec la molette
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        transform.Translate(Vector3.forward * scroll * rotationSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * scroll * moveSpeedScroll);
 
         // Rotation seulement si clic droit maintenu
         if (Input.GetMouseButton(0))
         {
             yaw -= Input.GetAxis("Mouse X") * rotationSpeed;
             pitch += Input.GetAxis("Mouse Y") * rotationSpeed;
+
+            transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        }
+        
+        // Rotation seulement si clic droit maintenu
+        if (Input.GetMouseButton(1))
+        {
+            Debug.Log("click");
+            yaw += Input.GetAxis("Mouse X") * rotationSpeed;
+            pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;
 
             transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
