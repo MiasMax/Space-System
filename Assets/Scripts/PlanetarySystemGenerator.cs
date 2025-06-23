@@ -8,8 +8,8 @@ public class PlanetarySystemGenerator : MonoBehaviour
     [Header("Système stellaire")]
     public GameObject planetPrefab;
     public GameObject starPrefab;
-    public int numberOfPlanets;
-    public int numberOfStars;
+    //public int numberOfPlanets;
+    //public int numberOfStars;
 
     [Header("Paramètres d'orbites")]
     public float initialDistance = 50f;
