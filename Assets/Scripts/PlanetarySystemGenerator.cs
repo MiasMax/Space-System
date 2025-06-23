@@ -32,9 +32,7 @@ public class PlanetarySystemGenerator : MonoBehaviour
             Orbits.ComputeRocheLimit(star1, star2),
             Orbits.ComputeRocheLimit(star2, star1)
         );
-
-        float clampedSeparationFactor = Mathf.Max(minSeparationFactor, Mathf.Min(Gaussian.NormalDistribution(meanSeparationFactor), maxSeparationFactor)); // Tirage aléatoire autour de 5 Bornage entre 3 et 7
-        float separation = rocheLimit * clampedSeparationFactor;  // Calcul final de la séparation
+        float separation = rocheLimit * Mathf.Max(minSeparationFactor, Mathf.Min(Gaussian.NormalDistribution(meanSeparationFactor), maxSeparationFactor)); // Tirage aléatoire autour de 5 Bornage entre 3 et 7
 
         GenerateBinarySystem(star1, star2, separation);
     }

@@ -21,13 +21,17 @@ public class OrbitalTrail : MonoBehaviour
 
     void Update()
     {
-        positions.Add(transform.position);
+        if (Time.timeScale != 0f)
+        {
+           
+            positions.Add(transform.position);
 
-        if (positions.Count > maxPoints)
-            positions.RemoveAt(0);
+            if (positions.Count > maxPoints)
+                positions.RemoveAt(0);
 
-        lineRenderer.positionCount = positions.Count;
-        lineRenderer.SetPositions(positions.ToArray());
+            lineRenderer.positionCount = positions.Count;
+            lineRenderer.SetPositions(positions.ToArray());
+        }
     }
 
     void SetupRenderer()
