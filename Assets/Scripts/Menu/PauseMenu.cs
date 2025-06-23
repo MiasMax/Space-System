@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -9,6 +10,8 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPause = false;
     public GameObject PauseMenuUI;
     public static float OldTimeScale;
+    public Slider mySlider; // Drag your slider from the UI to this field in the Inspector
+
 
     private void Start()
     {
@@ -49,6 +52,14 @@ public class PauseMenu : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
+        Resume();
+    }
+
+    public void SlideTimeScale()
+    {
+        int slideTimeScale = (int)mySlider.value;
+
+        TimeSpeedController.ApplyTimeScale(slideTimeScale);
     }
 
     public void QuitGame()

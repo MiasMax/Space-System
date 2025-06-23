@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class TimeSpeedController : MonoBehaviour
 {
-    public float[] timeScales = { 0f, 0.1f, 1f, 10f, 100f, 1000f }; // Valeurs possibles
-    private int currentIndex = 2; // Par défaut : 1x (index 2)
+    public static float[] timeScales = { 0f, 0.1f, 1f, 10f, 100f}; // Valeurs possibles
+    private static int currentIndex = 2; // Par défaut : 1x (index 2)
 
     void Update()
     {
@@ -33,8 +34,9 @@ public class TimeSpeedController : MonoBehaviour
         }
     }
 
-    void ApplyTimeScale()
+    public static void ApplyTimeScale(int index = -1)
     {
+        currentIndex = index == -1f ? currentIndex : index;
         Time.timeScale = timeScales[currentIndex];
         Time.fixedDeltaTime = 0.02f * Time.timeScale; // adapter FixedUpdate à l’échelle de temps
 
